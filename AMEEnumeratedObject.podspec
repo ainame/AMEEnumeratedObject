@@ -13,6 +13,7 @@ Pod::Spec.new do |s|
   s.summary          = "AMEEnumeratedObject provide defining method to create a enum object as a plain old objc object."
   s.description      = <<-DESC
                        AMEEnumeratedObject provide defining method to create a enum object as a plain old objc object.
+                       This almost realize the enum object like Java lang's one.
                        DESC
   s.homepage         = "https://github.com/ainame/AMEEnumeratedObject"
   # s.screenshots     = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
@@ -25,7 +26,7 @@ Pod::Spec.new do |s|
   s.requires_arc = true
 
   s.source_files = 'Pod/Classes'
-  s.resources = 'Pod/Assets/*.png'
+  # s.resources = 'Pod/Assets/*.png'
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
