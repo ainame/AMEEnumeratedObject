@@ -7,7 +7,38 @@
 
 ## Usage
 
-To run the example project, clone the repo, and run `pod install` from the Example directory first.
+```objc
+@interface Alphabets : AMEEnumeratCollection; @end
+@interface Alphabet : AMEEnumeratedObject
++ (Alphabet *)enumObject;
+@end;
+@implementation Alphabet;  @end
+@interface A : Alphabet; @end; @implementation A; @end
+@interface B : Alphabet; @end; @implementation B; @end
+@interface C : Alphabet; @end; @implementation C; @end
+
+@implementation Alphabets
++ (NSArray *) values
+{
+    return @[
+        [A defineEnum:0 name:@"a" stringValue:@"えー"],
+        [B defineEnum:1 name:@"b" stringValue:@"びー"],
+        [C defineEnum:2 name:@"c" stringValue:@"しー"],
+    ];
+}
+@end
+
+// ....
+
+[AMEEnumeratedObjectInitializer initializeAllEnumerateObjects];
+Alphabet *alphabet = [A enumObject];
+alphabet.ordinal; //=> 0
+alphabet.name; //=> @"a"
+alphabet.stringValue; //=> @"えー"
+
+alphabet = [Alphabets valueForName:@"b"] // => B object;
+[Alphabets values]                       // => A, B and c instances as NSArray;
+```
 
 ## Requirements
 
@@ -20,9 +51,8 @@ it, simply add the following line to your Podfile:
 
 ## Author
 
-ainame, s.namai.2012@gmail.com
+[ainame](https://twitter.com/ainame)
 
 ## License
 
 AMEEnumeratedObject is available under the MIT license. See the LICENSE file for more info.
-
