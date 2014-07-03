@@ -1,0 +1,10 @@
+target 'AMEEnumeratedObject', :exclusive => true do
+  pod "AMEEnumeratedObject", :path => "../"
+end
+
+target 'Tests', :exclusive => true do
+  pod "AMEEnumeratedObject", :path => "../"
+
+  pod 'Specta', '~> 0.2.1'
+  pod 'Expecta'
+end
