@@ -9,7 +9,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "AMEEnumeratedObject"
-  s.version          = "0.1.0"
+  s.version          = "0.2.0"
   s.summary          = "AMEEnumeratedObject provide defining method to create a enum object as a plain old objc object."
   s.description      = <<-DESC
                        AMEEnumeratedObject provide defining method to create a enum object as a plain old objc object.
