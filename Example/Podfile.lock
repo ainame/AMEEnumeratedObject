@@ -13,7 +13,7 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  AMEEnumeratedObject: 558315dabfc2e86c3b734695bc18f43746423230
+  AMEEnumeratedObject: c5b50e3e6fd3c23da2d2ec7ac229e0b963462c14
   Expecta: ce8a51b9fad15a2cd573b291cb2909aaed865350
   Specta: 9141310f46b1f68b676650ff2854e1ed0b74163a
 
