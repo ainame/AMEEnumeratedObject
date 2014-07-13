@@ -11,27 +11,31 @@
 
 static NSMutableDictionary *globalEnumerateObjectStore;
 
+@interface AMEEnumeratedObject ()
+@property (nonatomic, strong) NSString *descriptionString;
+@end
+
 @implementation AMEEnumeratedObject
 
 + (instancetype)enumObject
 {
-    return [self defineEnum:NSNotFound name:nil stringValue:nil];
+    return [self defineEnum:NSNotFound name:nil description:nil];
 }
 
-+ (instancetype)defineEnum:(NSUInteger)oridnal
++ (instancetype)defineEnum:(NSUInteger)ordinal
 {
-    return [self defineEnum:oridnal name:nil stringValue:nil];
+    return [self defineEnum:ordinal name:nil description:nil];
 }
 
-+ (instancetype)defineEnum:(NSUInteger)oridnal name:(NSString *)name
++ (instancetype)defineEnum:(NSUInteger)ordinal name:(NSString *)name
 {
-    return [self defineEnum:oridnal name:name stringValue:nil];
+    return [self defineEnum:ordinal name:name description:nil];
 }
 
-+ (instancetype)defineEnum:(NSUInteger)oridnal name:(NSString *)name stringValue:(NSString *)stringValue
++ (instancetype)defineEnum:(NSUInteger)ordinal name:(NSString *)name description:(NSString *)description
 {
     NSString *key = NSStringFromClass(self);
-    if (!globalEnumerateObjectStore[key] && oridnal == NSNotFound) {
+    if (!globalEnumerateObjectStore[key] && ordinal == NSNotFound) {
         NSLog(@"undefined enumerate object error %@", self);
         return nil;
     }
@@ -39,23 +43,23 @@ static NSMutableDictionary *globalEnumerateObjectStore;
         return globalEnumerateObjectStore[key];
     }
 
-    return globalEnumerateObjectStore[key] = [[self alloc] initWithOrdinal:oridnal name:name stringValue:stringValue];
+    return globalEnumerateObjectStore[key] = [[self alloc] initWithOrdinal:ordinal name:name description:description];
 }
 
-- (instancetype)initWithOrdinal:(NSUInteger)ordinal name:(NSString *)name stringValue:(NSString *)stringValue
+- (instancetype)initWithOrdinal:(NSUInteger)ordinal name:(NSString *)name description:(NSString *)description
 {
     self = [super init];
     if (self) {
         _ordinal = ordinal;
         _name = name ? name : NSStringFromClass(self.class);
-        _stringValue = stringValue;
+        _descriptionString = description;
     }
     return self;
 }
 
-- (NSString *)getStringValue
+- (NSString *)description
 {
-    return _stringValue ? _stringValue : _name;
+    return _descriptionString ? _descriptionString : [super description];
 }
 
 @end
@@ -64,8 +68,9 @@ static NSMutableDictionary *globalEnumerateObjectStore;
 
 + (void)initialize
 {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{ [self values]; });
+    if (self == [self class]) {
+        [self values];
+    }
 }
 
 + (NSArray *)values
@@ -83,27 +88,30 @@ static NSMutableDictionary *globalEnumerateObjectStore;
     }
     return nil;
 }
+
 @end
 
 @implementation AMEEnumeratedObjectInitializer
 
 + (void)initializeAllEnumerateObjects
 {
-    globalEnumerateObjectStore = [NSMutableDictionary dictionary];
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        globalEnumerateObjectStore = [NSMutableDictionary dictionary];
+        int count = objc_getClassList(NULL, 0);
+        Class classes[count];
 
-    int count = objc_getClassList(NULL, 0);
-    Class classes[count];
-
-    if (count <= 0) {
-        return;
-    }
-    objc_getClassList(classes, count);
-    for (int i = 0; i < count; i++) {
-        Class clazz = classes[i];
-        if (class_getSuperclass(clazz) == AMEEnumerateCollection.class) {
-            [clazz initialize];
+        if (count <= 0) {
+            return;
         }
-    }
+        objc_getClassList(classes, count);
+        for (int i = 0; i < count; i++) {
+            Class clazz = classes[i];
+            if (class_getSuperclass(clazz) == AMEEnumerateCollection.class) {
+                [clazz initialize];
+            }
+        }
+    });
 }
 
 @end
