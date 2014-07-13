@@ -21,9 +21,9 @@
 + (NSArray *) values
 {
     return @[
-        [A defineEnum:0 name:@"a" stringValue:@"えー"],
-        [B defineEnum:1 name:@"b" stringValue:@"びー"],
-        [C defineEnum:2 name:@"c" stringValue:@"しー"],
+        [A defineEnum:0 name:@"a" description:@"えー"],
+        [B defineEnum:1 name:@"b" description:@"びー"],
+        [C defineEnum:2 name:@"c" description:@"しー"],
     ];
 }
 @end
@@ -34,7 +34,7 @@
 Alphabet *alphabet = [A enumObject];
 alphabet.ordinal; //=> 0
 alphabet.name; //=> @"a"
-alphabet.stringValue; //=> @"えー"
+alphabet.description; //=> @"えー"
 
 alphabet = [Alphabets valueForName:@"b"] // => B object;
 [Alphabets values]                       // => A, B and c instances as NSArray;
